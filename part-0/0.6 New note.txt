@@ -1,0 +1,9 @@
+title New Note on Single Page Application
+
+browser->server: HTTP POST new note with user input
+
+note over browser 
+executes js
+which adds note to already loaded array of notes
+then renders new note onto page
+end note

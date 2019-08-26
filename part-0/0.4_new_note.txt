@@ -1,0 +1,22 @@
+title New Note
+
+browser->server: HTTP POST new note with user input
+server->browser: HTTP code 302 URL redirect
+browser->server: HTTP GET /notes
+server->browser: HTML code
+browser->server: HTTP Get /main.css
+server->browser: /main.css
+browser->server: HTTP GET /main.js
+server->browser: /main.js
+
+note over browser 
+executes js
+which requests /data.json
+end note
+
+browser->server: HTTP GET /data.json
+server->browser: /data.json
+
+note over browser
+browser does event handler that renders notes to webpage
+end note
