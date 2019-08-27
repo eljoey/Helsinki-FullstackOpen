@@ -6,9 +6,10 @@ const Button = props => (
 );
 
 const Stat = props => (
-  <div>
-    {props.name} {props.value}
-  </div>
+  <tr>
+    <td>{props.name}</td>
+    <td>{props.value}</td>
+  </tr>
 );
 
 const Stats = props => {
@@ -43,12 +44,16 @@ const Stats = props => {
   return (
     <div>
       <h1>Stats</h1>
-      <Stat name="Good:" value={props.good} />
-      <Stat name="Neutral:" value={props.neutral} />
-      <Stat name="Bad:" value={props.bad} />
-      <Stat name="Total:" value={total()} />
-      <Stat name="Average:" value={average()} />
-      <Stat name="Positive:" value={positive()} />
+      <table>
+        <tbody>
+          <Stat name="Good:" value={props.good} />
+          <Stat name="Neutral:" value={props.neutral} />
+          <Stat name="Bad:" value={props.bad} />
+          <Stat name="Total:" value={total()} />
+          <Stat name="Average:" value={average()} />
+          <Stat name="Positive:" value={positive()} />
+        </tbody>
+      </table>
     </div>
   );
 };
