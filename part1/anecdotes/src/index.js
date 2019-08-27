@@ -1,6 +1,26 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 
+const MostVotes = props => {
+  let highest = props.votes[0];
+  let quoteIndex = 0;
+
+  props.votes.forEach((value, index) => {
+    if (highest < value) {
+      highest = value;
+      quoteIndex = index;
+    }
+  });
+
+  return (
+    <div>
+      <h1>Anecdote with the most votes</h1>
+      <div>{props.anecdotes[quoteIndex]}</div>
+      <div>has {highest} votes</div>
+    </div>
+  );
+};
+
 const App = props => {
   const [selected, setSelected] = useState(0);
   const [votes, setVotes] = useState(
@@ -23,10 +43,12 @@ const App = props => {
 
   return (
     <div>
+      <h1>Anecdote of the Day</h1>
       <div>{props.anecdotes[selected]}</div>
       <div>This quote has {votes[selected]} votes</div>
-      <button onClick={addVote}>Vote for quote</button>
-      <button onClick={randQuote}>Random Quote</button>
+      <button onClick={addVote}>Vote for Anecdote</button>
+      <button onClick={randQuote}>Next</button>
+      <MostVotes votes={votes} anecdotes={props.anecdotes} />
     </div>
   );
 };
