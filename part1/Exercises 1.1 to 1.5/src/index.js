@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 
 const Header = ({ course }) => {
@@ -24,7 +24,6 @@ const Part = props => {
 };
 
 const Total = props => {
-  console.log(props);
   return (
     <p>
       Number of exercises{' '}
