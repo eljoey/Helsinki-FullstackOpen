@@ -22,7 +22,11 @@ const Information = ({ result }) => {
   const languages = arr => {
     return arr.map(language => <li key={language.name}>{language.name}</li>);
   };
-  return <div>{showInfo(result)}</div>;
+  return (
+    <div>
+      <div>{showInfo(result)}</div>
+    </div>
+  );
 };
 
 export default Information;
