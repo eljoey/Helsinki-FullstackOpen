@@ -31,10 +31,6 @@ const App = () => {
     setNewNumber('');
   };
 
-  const handleNewName = e => {
-    setNewName(e.target.value);
-  };
-
   const checkName = () => {
     if (
       persons
@@ -48,10 +44,12 @@ const App = () => {
     }
   };
 
+  const handleNewName = e => {
+    setNewName(e.target.value);
+  };
   const handleSearch = e => {
     setSearch(e.target.value);
   };
-
   const handleNewNumber = e => {
     setNewNumber(e.target.value);
   };
