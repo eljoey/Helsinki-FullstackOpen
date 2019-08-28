@@ -17,8 +17,14 @@ const edit = (id, newObj) => {
   return request.then(res => res.data);
 };
 
+const delObj = id => {
+  const request = axios.delete(`${apiURL}/${id}`);
+  return request.then(res => res.data);
+};
+
 export default {
   getAll,
   create,
-  edit
+  edit,
+  delObj
 };

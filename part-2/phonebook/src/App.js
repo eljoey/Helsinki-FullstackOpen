@@ -57,6 +57,18 @@ const App = () => {
     setNewNumber(e.target.value);
   };
 
+  const handleClick = id => {
+    const selPerson = persons.find(person => person.id === id);
+    const newList = persons.filter(person => person.id !== id);
+
+    if (window.confirm(`Delete ${selPerson.name}?`)) {
+      noteService
+        .delObj(id)
+        .then(res => setPersons(newList))
+        .catch(`${selPerson.name} was already deleted from the phonebook`);
+    }
+  };
+
   return (
     <div>
       <h2>Phonebook</h2>
@@ -70,7 +82,7 @@ const App = () => {
         handleNewNumber={handleNewNumber}
       />
       <h2>Numbers</h2>
-      <People search={search} persons={persons} />
+      <People search={search} persons={persons} handleClick={handleClick} />
     </div>
   );
 };

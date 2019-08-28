@@ -7,8 +7,9 @@ const People = props => {
         person.name.toLowerCase().includes(string.toLowerCase())
       )
       .map(person => (
-        <div key={person.name}>
-          {person.name} {person.number}
+        <div key={person.id}>
+          {person.name} {person.number}{' '}
+          <button onClick={() => props.handleClick(person.id)}>Delete</button>
         </div>
       ));
   };
