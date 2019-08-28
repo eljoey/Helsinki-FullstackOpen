@@ -19,8 +19,11 @@ const App = () => {
   const addName = e => {
     e.preventDefault();
 
-    //Checks if name was already added (isn't case sensitive)
-    if (checkName()) return;
+    //Checks if name was already added (isn't case sensitive) then asks if they want to update number
+    if (checkName()) {
+      handleNewPhone();
+      return;
+    }
 
     const personObj = {
       name: newName,
@@ -40,7 +43,6 @@ const App = () => {
         .map(person => person.name.toLowerCase())
         .includes(newName.toLowerCase())
     ) {
-      alert(`${newName} was already added to phonebook`);
       return true;
     } else {
       return false;
@@ -66,6 +68,31 @@ const App = () => {
         .delObj(id)
         .then(res => setPersons(newList))
         .catch(`${selPerson.name} was already deleted from the phonebook`);
+    }
+  };
+
+  const handleNewPhone = () => {
+    const selPerson = persons.find(
+      person => person.name.toLowerCase() === newName.toLowerCase()
+    );
+    const newInfo = { ...selPerson, number: newNumber };
+
+    if (
+      window.confirm(
+        `${newName} is already added, replace the old number with the new one?`
+      )
+    ) {
+      noteService.edit(`${selPerson.id}`, newInfo).then(updatedInfo => {
+        setPersons(
+          persons.map(person =>
+            person.id !== selPerson.id ? person : updatedInfo
+          )
+        );
+        setNewName('');
+        setNewNumber('');
+      });
+    } else {
+      return;
     }
   };
 
