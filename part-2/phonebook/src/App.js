@@ -3,12 +3,14 @@ import Filter from './Components/Filter';
 import Form from './Components/Form';
 import People from './Components/People';
 import noteService from './services/persons';
+import Notification from './Components/Notification';
 
 const App = () => {
   const [persons, setPersons] = useState([]);
   const [newName, setNewName] = useState('');
   const [newNumber, setNewNumber] = useState('');
   const [search, setSearch] = useState('');
+  const [message, setMessage] = useState(null);
 
   useEffect(() => {
     noteService.getAll().then(initialData => {
@@ -31,9 +33,17 @@ const App = () => {
     };
 
     noteService.create(personObj).then(newPerson => {
+      setMessage({
+        message: `Added ${personObj.name}`,
+        type: 'success'
+      });
       setPersons(persons.concat(newPerson));
       setNewName('');
       setNewNumber('');
+
+      setTimeout(() => {
+        setMessage(null);
+      }, 3000);
     });
   };
 
@@ -82,15 +92,30 @@ const App = () => {
         `${newName} is already added, replace the old number with the new one?`
       )
     ) {
-      noteService.edit(`${selPerson.id}`, newInfo).then(updatedInfo => {
-        setPersons(
-          persons.map(person =>
-            person.id !== selPerson.id ? person : updatedInfo
-          )
-        );
-        setNewName('');
-        setNewNumber('');
-      });
+      noteService
+        .edit(`${selPerson.id}`, newInfo)
+        .then(updatedInfo => {
+          setPersons(
+            persons.map(person =>
+              person.id !== selPerson.id ? person : updatedInfo
+            )
+          );
+          setNewName('');
+          setNewNumber('');
+        })
+        .catch(err => {
+          setMessage({
+            message: `Information of ${selPerson.name} has already been removed from the server`,
+            type: 'error'
+          });
+          setPersons(persons.filter(person => person.id !== selPerson.id));
+          setNewName('');
+          setNewNumber('');
+
+          setTimeout(() => {
+            setMessage(null);
+          }, 3000);
+        });
     } else {
       return;
     }
@@ -99,6 +124,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={message} />
       <Filter search={search} handleSearch={handleSearch} />
       <h2>Add New Person</h2>
       <Form
