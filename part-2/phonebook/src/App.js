@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Filter from './Components/Filter';
 import Form from './Components/Form';
 import People from './Components/People';
-import noteService from './services/persons';
+import personService from './services/persons';
 import Notification from './Components/Notification';
 
 const App = () => {
@@ -13,7 +13,7 @@ const App = () => {
   const [message, setMessage] = useState(null);
 
   useEffect(() => {
-    noteService.getAll().then(initialData => {
+    personService.getAll().then(initialData => {
       setPersons(initialData);
     });
   }, []);
@@ -32,7 +32,7 @@ const App = () => {
       number: newNumber
     };
 
-    noteService.create(personObj).then(newPerson => {
+    personService.create(personObj).then(newPerson => {
       setMessage({
         message: `Added ${personObj.name}`,
         type: 'success'
@@ -74,7 +74,7 @@ const App = () => {
     const newList = persons.filter(person => person.id !== id);
 
     if (window.confirm(`Delete ${selPerson.name}?`)) {
-      noteService
+      personService
         .delObj(id)
         .then(res => setPersons(newList))
         .catch(`${selPerson.name} was already deleted from the phonebook`);
@@ -92,8 +92,8 @@ const App = () => {
         `${newName} is already added, replace the old number with the new one?`
       )
     ) {
-      noteService
-        .edit(`${selPerson.id}`, newInfo)
+      personService
+        .update(selPerson.id, newInfo)
         .then(updatedInfo => {
           setPersons(
             persons.map(person =>

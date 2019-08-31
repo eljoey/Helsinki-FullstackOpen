@@ -12,8 +12,10 @@ const create = newObj => {
   return request.then(res => res.data);
 };
 
-const edit = (id, newObj) => {
+const update = (id, newObj) => {
   const request = axios.put(`${apiURL}/${id}`, newObj);
+  console.log(apiURL, id);
+
   return request.then(res => res.data);
 };
 
@@ -25,6 +27,6 @@ const delObj = id => {
 export default {
   getAll,
   create,
-  edit,
+  update,
   delObj
 };
