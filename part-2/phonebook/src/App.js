@@ -32,19 +32,27 @@ const App = () => {
       number: newNumber
     };
 
-    personService.create(personObj).then(newPerson => {
-      setMessage({
-        message: `Added ${personObj.name}`,
-        type: 'success'
-      });
-      setPersons(persons.concat(newPerson));
-      setNewName('');
-      setNewNumber('');
+    personService
+      .create(personObj)
+      .then(newPerson => {
+        setMessage({
+          message: `Added ${personObj.name}`,
+          type: 'success'
+        });
+        setPersons(persons.concat(newPerson));
+        setNewName('');
+        setNewNumber('');
 
-      setTimeout(() => {
-        setMessage(null);
-      }, 3000);
-    });
+        setTimeout(() => {
+          setMessage(null);
+        }, 3000);
+      })
+      .catch(error => {
+        setMessage({
+          message: error.response.data.error,
+          type: 'error'
+        });
+      });
   };
 
   const checkName = () => {
