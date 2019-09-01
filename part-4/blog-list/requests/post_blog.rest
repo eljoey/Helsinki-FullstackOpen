@@ -2,7 +2,6 @@ POST http://localhost:3003/api/blogs
 Content-Type: application/json
 
 {
-    "title": "How to do things",
     "author": "Larry Garry",
     "url": "http://www.weeee.com",
     "likes": "4"
