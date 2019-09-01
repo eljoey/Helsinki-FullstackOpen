@@ -49,9 +49,27 @@ const mostBlogs = blogs => {
   }
 }
 
+const mostLikes = blogs => {
+  if (blogs.length === 0) return 'no blogs given'
+
+  let authorLikes = blogs.reduce((acc, cur) => {
+    acc[cur.author] = acc[cur.author] + cur.likes || cur.likes
+    return acc
+  }, {})
+
+  let mostLikesAuthor = Object.keys(authorLikes).reduce((acc, cur) =>
+    authorLikes[acc] > authorLikes[cur] ? acc : cur
+  )
+  return {
+    author: mostLikesAuthor,
+    likes: authorLikes[mostLikesAuthor]
+  }
+}
+
 module.exports = {
   dummy,
   totalLikes,
   favoriteBlog,
-  mostBlogs
+  mostBlogs,
+  mostLikes
 }

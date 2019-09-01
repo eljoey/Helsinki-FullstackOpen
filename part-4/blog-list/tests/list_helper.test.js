@@ -5,25 +5,25 @@ const blogs = [
     title: 'test1',
     author: 'test1 author',
     url: 'test.com',
-    likes: 10
+    likes: 101
   },
   {
     title: 'test1',
     author: 'test1 author',
     url: 'test.com',
-    likes: 40
+    likes: 401
   },
   {
     title: 'test2',
     author: 'test2 author',
     url: 'test.com',
-    likes: 30
+    likes: 302
   },
   {
-    title: 'test1',
-    author: 'test1 author',
+    title: 'test3',
+    author: 'test3 author',
     url: 'test.com',
-    likes: 20
+    likes: 2000
   }
 ]
 
@@ -42,11 +42,11 @@ describe('total likes', () => {
   test('when list has only one blog equals the likes of that', () => {
     const oneBlog = blogs.slice(0, 1)
 
-    expect(listHelper.totalLikes(oneBlog)).toBe(10)
+    expect(listHelper.totalLikes(oneBlog)).toBe(101)
   })
 
   test('of a bigger list is calculated right', () => {
-    expect(listHelper.totalLikes(blogs)).toBe(100)
+    expect(listHelper.totalLikes(blogs)).toBe(2804)
   })
 })
 
@@ -62,7 +62,7 @@ describe('favorite blog', () => {
   })
 
   test('of an array of blogs is chosen correctly', () => {
-    expect(listHelper.favoriteBlog(blogs)).toEqual(blogs[1])
+    expect(listHelper.favoriteBlog(blogs)).toEqual(blogs[3])
   })
 })
 
@@ -82,7 +82,29 @@ describe('most blogs', () => {
   test('of an array of blogs gives correct author and number of blogs', () => {
     expect(listHelper.mostBlogs(blogs)).toEqual({
       author: 'test1 author',
-      blogs: 3
+      blogs: 2
+    })
+  })
+})
+
+describe('most likes', () => {
+  test('of an empty arr to return "no blogs given"', () => {
+    expect(listHelper.mostLikes([])).toBe('no blogs given')
+  })
+
+  test('of an array of one blog to be correct', () => {
+    const oneBlog = blogs.slice(0, 1)
+
+    expect(listHelper.mostLikes(oneBlog)).toEqual({
+      author: oneBlog[0].author,
+      likes: oneBlog[0].likes
+    })
+  })
+
+  test('of an array of blogs to be correct', () => {
+    expect(listHelper.mostLikes(blogs)).toEqual({
+      author: 'test3 author',
+      likes: 2000
     })
   })
 })
