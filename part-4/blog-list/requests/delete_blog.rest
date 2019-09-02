@@ -1,0 +1,13 @@
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+
+# get id from this
+{
+    "title": "How to get deleted",
+    "author": "Larry Garry",
+    "url": "http://www.weeee.com",
+    "likes": "4",
+}
+
+###
+DELETE http://localhost:3003/api/blogs/5d6c682985dc2f361c431c4e

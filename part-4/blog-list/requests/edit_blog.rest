@@ -1,0 +1,11 @@
+PUT http://localhost:3003/api/blogs/5d6addf9108930150c69896a
+Content-Type: application/json
+
+# Change likes to whatever
+{
+    "title": "How to do things",
+    "author": "Larry Garry",
+    "url": "http://www.weeee.com",
+    "likes": 4444,
+    "id": "5d6addf9108930150c69896a"
+}
