@@ -3,6 +3,10 @@ const mongoose = require('mongoose')
 mongoose.set('useFindAndModify', false)
 
 const blogSchema = mongoose.Schema({
+  url: {
+    type: String,
+    required: true
+  },
   title: {
     type: String,
     minlength: 3,
@@ -13,9 +17,9 @@ const blogSchema = mongoose.Schema({
     minlength: 3,
     required: true
   },
-  url: {
-    type: String,
-    required: true
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
   },
   likes: Number
 })

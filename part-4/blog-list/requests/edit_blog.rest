@@ -1,4 +1,4 @@
-PUT http://localhost:3003/api/blogs/5d6addf9108930150c69896a
+PUT http://localhost:3003/api/blogs/5d6ed2d1e03eec535ff5a3da
 Content-Type: application/json
 
 # Change likes to whatever

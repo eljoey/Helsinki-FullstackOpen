@@ -1,13 +1,14 @@
 POST http://localhost:3003/api/blogs
 Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InN1cGVyQWRtaW4iLCJpZCI6IjVkNmVhZTVmYTkxNzcyNDJhY2Q4OGI4MiIsImlhdCI6MTU2NzU0Mzg5OX0.F5GF5Vu4UXXEgn-XlUhwIDiYOGvwq4JzYxP9yMMNf1A
 
-# get id from this
 {
-    "title": "How to get deleted",
-    "author": "Larry Garry",
+    "title": "how to do Stuff",
+    "author": "Marry Sue",
     "url": "http://www.weeee.com",
-    "likes": "4",
+    "likes": "4"
 }
 
 ###
-DELETE http://localhost:3003/api/blogs/5d6c682985dc2f361c431c4e
+DELETE http://localhost:3003/api/blogs/5d6ee7a177a85b5ff6c6aaa6
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InN1cGVyQWRtaW4iLCJpZCI6IjVkNmVhZTVmYTkxNzcyNDJhY2Q4OGI4MiIsImlhdCI6MTU2NzU0Mzg5OX0.F5GF5Vu4UXXEgn-XlUhwIDiYOGvwq4JzYxP9yMMNf1A

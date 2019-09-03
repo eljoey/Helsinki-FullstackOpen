@@ -4,7 +4,7 @@ const helper = require('./test_helper')
 const app = require('../app')
 const api = supertest(app)
 const Blog = require('../models/blog')
-
+const User = require('../models/user')
 beforeEach(async () => {
   await Blog.deleteMany({})
 
@@ -134,6 +134,112 @@ describe('there is initial blogs saved', () => {
     })
   })
 })
+
+describe('test login functionality', () => {
+  beforeEach(async () => {
+    await User.deleteMany({})
+    const user = new User({
+      username: 'admin',
+      name: 'admin',
+      password: 'adminPassword'
+    })
+    await user.save()
+  })
+
+  test('create new user succeeds', async () => {
+    const usersAtStart = await helper.usersInDb()
+
+    const newUser = {
+      username: 'newAdmin1',
+      name: 'betterAdmin',
+      password: 'betterAdminPassword'
+    }
+
+    await api
+      .post('/api/users')
+      .send(newUser)
+      .expect(200)
+      .expect('Content-Type', /application\/json/)
+
+    const usersAtEnd = await helper.usersInDb()
+    expect(usersAtEnd.length).toBe(usersAtStart.length + 1)
+
+    const username = usersAtEnd.map(user => user.username)
+    expect(username).toContain(newUser.username)
+  })
+
+  test('duplicate user fails', async () => {
+    const usersAtStart = await helper.usersInDb()
+
+    const duplicateUser = {
+      username: 'admin',
+      name: 'admin',
+      password: 'adminPassword'
+    }
+
+    await api
+      .post('/api/users')
+      .send(duplicateUser)
+      .expect(400)
+
+    const usersAtEnd = await helper.usersInDb()
+    expect(usersAtEnd.length).toBe(usersAtStart.length)
+  })
+
+  test('too short password fails', async () => {
+    const usersAtStart = await helper.usersInDb()
+
+    const duplicateUser = {
+      username: 'newAdmin1',
+      name: 'admin',
+      password: 'ne'
+    }
+
+    await api
+      .post('/api/users')
+      .send(duplicateUser)
+      .expect(400)
+
+    const usersAtEnd = await helper.usersInDb()
+    expect(usersAtEnd.length).toBe(usersAtStart.length)
+  })
+
+  test('no password fails', async () => {
+    const usersAtStart = await helper.usersInDb()
+
+    const duplicateUser = {
+      username: 'newAdmin1',
+      password: 'ne'
+    }
+
+    await api
+      .post('/api/users')
+      .send(duplicateUser)
+      .expect(400)
+
+    const usersAtEnd = await helper.usersInDb()
+    expect(usersAtEnd.length).toBe(usersAtStart.length)
+  })
+
+  test('too short username fails', async () => {
+    const usersAtStart = await helper.usersInDb()
+
+    const duplicateUser = {
+      username: 'n',
+      name: 'admin',
+      password: 'newAdminPassword'
+    }
+
+    await api
+      .post('/api/users')
+      .send(duplicateUser)
+      .expect(400)
+
+    const usersAtEnd = await helper.usersInDb()
+    expect(usersAtEnd.length).toBe(usersAtStart.length)
+  })
+})
+
 afterAll(() => {
   mongoose.connection.close()
 })
