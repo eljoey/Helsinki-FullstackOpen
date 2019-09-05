@@ -34,12 +34,7 @@ function App() {
   const loginDisplay = () => {
     if (user === null) {
       return (
-        <Login
-          setUser={setUser}
-          user={user}
-          message={message}
-          setMessage={setMessage}
-        />
+        <Login setUser={setUser} message={message} setMessage={setMessage} />
       )
     } else {
       return (

@@ -33,7 +33,7 @@ const Blog = ({ blog, setBlogs, blogs, setMessage, user }) => {
       .then(returnedNote => {
         setBlogs(blogs.map(b => (b.id !== blog.id ? b : returnedNote)))
       })
-      .catch(error => {
+      .catch(() => {
         setMessage({
           message: 'Failed trying to add like',
           type: 'error'
@@ -51,7 +51,7 @@ const Blog = ({ blog, setBlogs, blogs, setMessage, user }) => {
     if (window.confirm(`Delete ${blog.title} by ${blog.author}?`)) {
       blogService
         .delObj(blog.id)
-        .then(res => setBlogs(newBlogs))
+        .then(() => setBlogs(newBlogs))
         .catch(`${blog.id} was already deleted from the phonebook`)
     }
   }

@@ -3,7 +3,7 @@ import loginService from '../services/login'
 import blogService from '../services/blogs'
 import Notification from './Notification'
 
-const Login = ({ user, setUser, setMessage, message }) => {
+const Login = ({ setUser, setMessage, message }) => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
 
