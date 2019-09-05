@@ -5,6 +5,7 @@ import Notification from './components/Notification'
 import CreateBlog from './components/CreateBlog'
 import blogService from './services/blogs'
 import './App.css'
+import Togglable from './components/Togglable'
 
 function App() {
   const [user, setUser] = useState(null)
@@ -44,27 +45,39 @@ function App() {
       return (
         <>
           <div>
+            <h2>Blogs</h2>
             {user.name} logged in.{' '}
             <a href="http://localhost:3000" onClick={handleLogout}>
               Logout
             </a>
           </div>
-          <h2>Blogs</h2>
-          <Notification message={message} />
-          <CreateBlog
-            setBlogs={setBlogs}
-            blogs={blogs}
-            setMessage={setMessage}
-          />
-          {blogs.map(blog => (
-            <Blog key={blog.id} blog={blog} />
-          ))}
+          <Togglable buttonLabel="Create Blog">
+            <Notification message={message} />
+            <CreateBlog
+              setBlogs={setBlogs}
+              blogs={blogs}
+              setMessage={setMessage}
+            />
+          </Togglable>
+          {/* Terrible naming need a better way to handle */}
+          {blogs
+            .sort((a, b) => b.likes - a.likes)
+            .map(blog => (
+              <Blog
+                key={blog.id}
+                blog={blog}
+                blogs={blogs}
+                setBlogs={setBlogs}
+                setMessage={setMessage}
+                user={user}
+              />
+            ))}
         </>
       )
     }
   }
 
-  return <div className="App">{loginDisplay()}</div>
+  return <div>{loginDisplay()}</div>
 }
 
 export default App
