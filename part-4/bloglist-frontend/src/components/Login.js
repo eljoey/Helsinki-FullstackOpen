@@ -1,22 +1,18 @@
-import React, { useState } from 'react'
+import React from 'react'
+import { useField } from '../hooks'
 import loginService from '../services/login'
 import blogService from '../services/blogs'
 import Notification from './Notification'
+import Input from './Input'
 
 const Login = ({ setUser, setMessage, message }) => {
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
-
-  const handleUsername = e => {
-    setUsername(e.target.value)
-  }
-
-  const handlePassword = e => {
-    setPassword(e.target.value)
-  }
+  const name = useField('text')
+  const pass = useField('password')
 
   const handleLogin = async e => {
     e.preventDefault()
+    let username = name.value
+    let password = pass.value
 
     try {
       const user = await loginService.login({ username, password })
@@ -25,11 +21,11 @@ const Login = ({ setUser, setMessage, message }) => {
 
       blogService.setToken(user.token)
       setUser(user)
-      setUsername('')
-      setPassword('')
+      name.empty()
+      pass.empty()
     } catch (error) {
       setMessage({
-        message: 'Wrong Username or Password',
+        message: error.message,
         type: 'error'
       })
 
@@ -45,19 +41,9 @@ const Login = ({ setUser, setMessage, message }) => {
         <h2>Login</h2>
         <Notification message={message} />
         username:
-        <input
-          type="text"
-          name="Username"
-          value={username}
-          onChange={handleUsername}
-        />
+        <Input {...name} />
         password:
-        <input
-          type="password"
-          name="password"
-          value={password}
-          onChange={handlePassword}
-        />
+        <Input {...pass} />
         <button type="submit">login</button>
       </div>
     </form>
