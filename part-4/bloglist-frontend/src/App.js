@@ -59,6 +59,7 @@ function App() {
             .sort((a, b) => b.likes - a.likes)
             .map(blog => (
               <Blog
+                className="blogPost"
                 key={blog.id}
                 blog={blog}
                 blogs={blogs}
