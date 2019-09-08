@@ -1,45 +1,58 @@
 import React from 'react'
 import { addVote } from '../reducers/anecdoteReducer'
 import { clearMessage, voteMessage } from '../reducers/notificationReducer'
+import { connect } from 'react-redux'
 
 const AnecdoteList = props => {
-  const { anecdotes, filter } = props.store.getState()
-
   const vote = id => {
-    props.store.dispatch(addVote(id))
+    props.addVote(id)
   }
   const message = anecdote => {
-    props.store.dispatch(voteMessage(anecdote))
+    props.voteMessage(anecdote)
+    console.log('step')
+
     setTimeout(() => {
-      props.store.dispatch(clearMessage())
+      props.clearMessage()
     }, 5000)
   }
 
   return (
     <div>
-      {anecdotes
-        .sort((a, b) => b.votes - a.votes)
-        .filter(anecdote =>
-          anecdote.content.toLowerCase().includes(filter.toLowerCase())
-        )
-        .map(anecdote => (
-          <div key={anecdote.id}>
-            <div>{anecdote.content}</div>
-            <div>
-              has {anecdote.votes}
-              <button
-                onClick={() => {
-                  vote(anecdote.id)
-                  message(anecdote.content)
-                }}
-              >
-                vote
-              </button>
-            </div>
+      {props.anecdotesToShow.map(anecdote => (
+        <div key={anecdote.id}>
+          <div>{anecdote.content}</div>
+          <div>
+            has {anecdote.votes}
+            <button
+              onClick={() => {
+                vote(anecdote.id)
+                message(anecdote.content)
+              }}
+            >
+              vote
+            </button>
           </div>
-        ))}
+        </div>
+      ))}
     </div>
   )
 }
 
-export default AnecdoteList
+const anecdotesToShow = ({ anecdotes, filter }) => {
+  return anecdotes
+    .sort((a, b) => b.votes - a.votes)
+    .filter(anecdote =>
+      anecdote.content.toLowerCase().includes(filter.toLowerCase())
+    )
+}
+
+const mapStateToProps = state => {
+  return {
+    anecdotesToShow: anecdotesToShow(state)
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  { clearMessage, voteMessage, addVote }
+)(AnecdoteList)

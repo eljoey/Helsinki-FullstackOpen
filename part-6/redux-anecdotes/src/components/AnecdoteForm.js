@@ -1,6 +1,7 @@
 import React from 'react'
 import { createAnecdote } from '../reducers/anecdoteReducer'
 import { clearMessage, newMessage } from '../reducers/notificationReducer'
+import { connect } from 'react-redux'
 
 const AnecdoteForm = props => {
   const style = {
@@ -10,14 +11,14 @@ const AnecdoteForm = props => {
     e.preventDefault()
     const content = e.target.anecdote.value
     e.target.anecdote.value = ''
-    props.store.dispatch(createAnecdote(content))
+    props.createAnecdote(content)
     newAnecdote(content)
   }
 
   const newAnecdote = content => {
-    props.store.dispatch(newMessage(content))
+    props.newMessage(content)
     setTimeout(() => {
-      props.store.dispatch(clearMessage())
+      props.clearMessage()
     }, 5000)
   }
 
@@ -33,4 +34,7 @@ const AnecdoteForm = props => {
   )
 }
 
-export default AnecdoteForm
+export default connect(
+  null,
+  { clearMessage, newMessage, createAnecdote }
+)(AnecdoteForm)

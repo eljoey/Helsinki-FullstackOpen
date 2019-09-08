@@ -1,9 +1,10 @@
 import React from 'react'
 import { searchAnecdotes } from '../reducers/filterReducer'
+import { connect } from 'react-redux'
 
 const Filter = props => {
   const handleChange = e => {
-    props.store.dispatch(searchAnecdotes(e.target.value))
+    props.searchAnecdotes(e.target.value)
   }
   const style = {
     marginBottom: 10
@@ -15,4 +16,7 @@ const Filter = props => {
   )
 }
 
-export default Filter
+export default connect(
+  null,
+  { searchAnecdotes }
+)(Filter)
