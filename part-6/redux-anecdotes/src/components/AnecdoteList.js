@@ -6,12 +6,11 @@ import { connect } from 'react-redux'
 const AnecdoteList = props => {
   const vote = anecdote => {
     props.addVote(anecdote.id)
-    props.voteMessage(anecdote)
+    props.voteMessage(anecdote.content)
     setTimeout(() => {
       props.clearMessage()
     }, 5000)
   }
-  const message = anecdote => {}
 
   return (
     <div>
