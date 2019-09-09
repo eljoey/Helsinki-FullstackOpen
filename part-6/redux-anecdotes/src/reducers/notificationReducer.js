@@ -9,10 +9,15 @@ const notificationReducer = (state = null, action) => {
   }
 }
 
-export const voteMessage = anecdote => {
-  return {
-    type: 'MESSAGE',
-    notification: `You voted for '${anecdote}'`
+export const setMessage = (message, time) => {
+  return async dispatch => {
+    dispatch({
+      type: 'MESSAGE',
+      notification: message
+    })
+    await setTimeout(() => {
+      dispatch(clearMessage())
+    }, time * 1000)
   }
 }
 
